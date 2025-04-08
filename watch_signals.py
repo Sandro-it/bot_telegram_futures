@@ -8,14 +8,19 @@ from signal_handler import process_signal
 load_dotenv()
 api_id = int(os.getenv("TELEGRAM_API_ID"))
 api_hash = os.getenv("TELEGRAM_API_HASH")
+# channel_username = os.getenv("TELEGRAM_CHANNEL")  # 👈 отримуємо канал
+
+# 📋 Отримання назв каналів з .env
+channels = [
+    os.getenv("TELEGRAM_CHANNEL_1"),
+    os.getenv("TELEGRAM_CHANNEL_2"),
+]
 
 # 📡 Telegram-клієнт
 client = TelegramClient("my_session", api_id, api_hash)
 
-# 👁 Канал, який слухаємо
-channel = "https://t.me/trademansi0n"
 
-@client.on(events.NewMessage(chats=channel))
+@client.on(events.NewMessage(chats=channels))
 async def handler(event):
     text = event.message.message
     print("\n📩 НОВЕ ПОВІДОМЛЕННЯ:")
